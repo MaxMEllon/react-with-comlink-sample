@@ -8,11 +8,16 @@ const style = {
   lineHeight: '100px',
   textAlign: 'center',
 }
+const Loading = () => (
+  <p style={{ color: 'gray', fontSize: '40px' }}>
+    loading...
+  </p>
+)
 
 export default function App() {
   return (
     <div style={style}>
-      <Suspense fallback={<p style={{ color: 'gray', fontSize: '40px' }}>loading...</p>}>
+      <Suspense fallback={<Loading />}>
         <Hello />
       </Suspense>
     </div>
