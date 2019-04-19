@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
+import { proxy } from 'comlinkjs'
+
+const HelloWorker = proxy(new Worker('./worker.js'))
 
 function Hello({ content, setContent }) {
   if (!content) {
-    throw new Promise(resolve => {
-      setTimeout(() => {
-        setContent('hello, world')
-        resolve()
-      }, 1000)
-    })
+    throw (async () => {
+      const instance = await new HelloWorker()
+      const content = await instance.greet()
+      setContent(content)
+    })()
   }
-  return (
-    <p>{content}</p>
-  )
+  return <p style={{ fontSize: '40px' }}>{content}</p>
 }
 
 export default function HelloWrapper() {
